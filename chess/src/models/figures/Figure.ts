@@ -13,33 +13,29 @@ export enum FigureNames {
   BISHOP = "Слон",
 }
 
-export class Figure{
-    color:Colors
-    logo: typeof logo | null
-    cell:Cell
-    name:FigureNames
-    id:string
+export class Figure {
+  color: Colors;
+  logo: typeof logo | null;
+  cell: Cell;
+  name: FigureNames;
+  id: string;
 
+  constructor(color: Colors, cell: Cell) {
+    this.color = color;
+    this.cell = cell;
+    this.cell.figure = this;
+    this.logo = null;
+    this.name = FigureNames.FIGURE;
+    this.id = crypto.randomUUID();
+  }
 
-    constructor(color:Colors, cell:Cell){
-        this.color = color
-        this.cell = cell
-        this.cell.figure = this
-        this.logo = null
-        this.name = FigureNames.FIGURE
-        this.id = crypto.randomUUID();
-    }
+  canMove(target: Cell): boolean {
+    if (target.figure?.color === this.color) return false;
 
+    if (target.figure?.name === FigureNames.KING) return false;
 
-    canMove(target:Cell):boolean {
-        if (target.figure?.color === this.color)
-            return false
-        
-        if (target.figure?.name === FigureNames.KING)
-            return false
-        
-        return true;
-    }
+    return true;
+  }
 
-    moveFigure(target:Cell){}
+  moveFigure(target: Cell) {}
 }
